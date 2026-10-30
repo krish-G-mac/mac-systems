@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>G Mac Systems | Technology That Works. Business That Grows.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --primary: #0051d5;
+    --primary-dark: #00174b;
+    --ink: #00020a;
+    --text: #191c1e;
+    --muted: #45464d;
+    --bg: #f7f9fb;
+    --surface: #f2f4f6;
+    --surface-2: #e6e8ea;
+    --pill: #dbe1ff;
+    --cyan: #a2eeff;
+    --navy: #101c35;
+    --navy-text: #bbc6e7;
+    --white: #ffffff;
+    --radius: 8px;
+    --radius-lg: 16px;
+    --shadow: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+    --font-head: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button, input, select, textarea { font: inherit; }
+
+  .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+  .section { padding: 96px 0; position: relative; overflow: hidden; }
+  .section-alt { background: var(--surface); }
+  .section-dark { background: var(--navy); color: var(--white); }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface-2); color: var(--muted);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.24px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 12px;
+  }
+  .eyebrow.pill { background: var(--pill); color: var(--primary-dark); padding: 6px 14px; box-shadow: var(--shadow); }
+
+  h1, h2, h3, h4 { font-family: var(--font-head); color: var(--ink); line-height: 1.2; }
+  h2.section-title { font-size: 40px; letter-spacing: -1px; font-weight: 700; }
+  .section-sub { font-size: 16px; color: var(--muted); line-height: 1.6; }
+  .text-center { text-align: center; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 28px; border-radius: var(--radius); border: none; cursor: pointer;
+    font-weight: 600; font-size: 14px; transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--primary); color: var(--white); box-shadow: 0 10px 15px -3px rgba(0,81,213,.25), 0 4px 6px -4px rgba(0,81,213,.25); }
+  .btn-primary:hover { background: #0047b8; }
+  .btn-secondary { background: var(--surface); color: var(--text); padding: 14px 24px; }
+  .btn-secondary:hover { background: var(--surface-2); }
+  .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  /* Header */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 80px;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(24px);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+  }
+  .header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo { font-family: var(--font-head); font-weight: 700; font-size: 20px; color: var(--ink); letter-spacing: -0.4px; }
+  .brand-tag { background: #eceef0; color: var(--muted); font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 8px; white-space: nowrap; }
+  .nav { display: flex; align-items: center; gap: 24px; }
+  .nav a { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .nav a:hover, .nav a.active { color: var(--primary); }
+  .nav .offer-tag { display: inline-flex; align-items: center; gap: 6px; }
+  .nav .offer-tag span { background: var(--pill); color: var(--primary-dark); font-size: 12px; padding: 2px 8px; border-radius: 12px; }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .header-phone { font-size: 12px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .header-cta { background: var(--primary); color: var(--white); padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 6px rgba(0,81,213,.25); white-space: nowrap; }
+  .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 5px 0; }
+
+  /* Hero */
+  .hero { padding: 176px 0 96px; background: var(--bg); }
+  .hero::before { content: ""; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: rgba(219,225,255,0.4); filter: blur(120px); border-radius: 12px; }
+  .hero::after { content: ""; position: absolute; top: -48px; right: -48px; width: 384px; height: 384px; background: rgba(162,238,255,0.3); filter: blur(100px); border-radius: 12px; }
+  .hero .container { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 32px; align-items: center; }
+  .hero-left { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 24px; }
+  .hero h1 { font-size: 56px; letter-spacing: -1.68px; line-height: 64px; }
+  .hero h1 .accent { color: var(--primary); }
+  .hero-sub { font-size: 18px; line-height: 28px; color: var(--muted); max-width: 576px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 16px; padding-top: 8px; }
+  .trust-checks { display: flex; gap: 12px; padding-top: 16px; flex-wrap: wrap; }
+  .trust-check { flex: 1 1 0; min-width: 150px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: .24px; }
+  .trust-check .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--primary); flex-shrink: 0; }
+  .hotline {
+    background: var(--surface); box-shadow: var(--shadow); border-radius: var(--radius);
+    padding: 14px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 12px;
+  }
+  .hotline strong { color: var(--ink); font-weight: 600; }
+  .hotline .muted { color: var(--muted); font-weight: 500; }
+  .hotline .sep { color: #c5c6ce; }
+  .hotline a.wa { color: var(--primary); font-weight: 600; }
+
+  .hero-right { grid-column: 7 / span 6; position: relative; height: 500px; display: flex; align-items: center; justify-content: center; }
+  .visual-stage {
+    width: 100%; height: 100%; max-width: 576px; background: var(--surface-2); border-radius: var(--radius-lg);
+    padding: 10px; box-shadow: 0 25px 50px -12px rgba(0,0,0,.25); position: relative; overflow: hidden;
+  }
+  .visual-image {
+    width: 100%; height: 100%; border-radius: var(--radius);
+    background:
+      radial-gradient(circle at 30% 30%, rgba(0,81,213,.45), transparent 55%),
+      radial-gradient(circle at 75% 70%, rgba(162,238,255,.35), transparent 60%),
+      linear-gradient(160deg, #1d2b4a 0%, #0b1424 100%);
+    display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.35);
+    font-family: var(--font-head); font-size: 14px; letter-spacing: .5px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.05);
+  }
+  .telemetry {
+    position: absolute; background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+    border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+  }
+  .telemetry-1 { top: 24px; right: 24px; padding: 14px; width: 213px; display: flex; flex-direction: column; gap: 4px; }
+  .telemetry-1 .row { display: flex; justify-content: space-between; align-items: center; }
+  .telemetry-1 .label { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text); }
+  .telemetry-1 .value { font-size: 13px; font-weight: 700; color: var(--primary); }
+  .spark { height: 24px; width: 128px; margin-top: 6px; }
+  .telemetry-2 { bottom: 24px; left: 24px; padding: 14px; display: flex; gap: 12px; align-items: center; }
+  .telemetry-2 .ico { width: 36px; height: 36px; border-radius: 4px; background: var(--cyan); display: flex; align-items: center; justify-content: center; }
+  .telemetry-2 .title { font-size: 12px; font-weight: 700; color: var(--text); }
+  .telemetry-2 .sub { font-size: 13px; font-weight: 500; color: var(--muted); }
+  .telemetry-3 { bottom: 24px; right: 24px; background: var(--navy); padding: 8px 12px; display: flex; gap: 8px; align-items: center; color: var(--white); font-size: 12px; font-weight: 600; letter-spacing: .3px; border-radius: 8px; }
+
+  /* Metrics */
+  .metrics-head { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 48px; text-align: center; }
+  .metrics-head h2 { font-size: 40px; letter-spacing: -1px; }
+  .metrics-head p { font-size: 16px; color: var(--muted); max-width: 672px; line-height: 1.6; }
+  .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .metric { background: var(--white); box-shadow: var(--shadow); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .metric-icon { width: 48px; height: 48px; border-radius: var(--radius); background: var(--pill); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+  .metric-value { font-family: var(--font-head); font-weight: 700; font-size: 40px; letter-spacing: -1px; color: var(--ink); line-height: 1.2; }
+  .metric-label { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: .14px; margin-top: 4px; }
+  .metric-desc { font-size: 14px; color: var(--muted); line-height: 1.45; }
+  .metrics-note { text-align: center; font-size: 12px; font-style: italic; font-weight: 500; color: var(--muted); letter-spacing: .24px; margin-top: 32px; }
+
+  /* Enquiry */
+  .enquiry .container { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 48px; align-items: start; }
+  .enquiry-left { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 24px; }
+  .enquiry-left h2 { font-size: 40px; letter-spacing: -1px; }
+  .enquiry-left p { font-size: 16px; color: var(--muted); line-height: 1.7; }
+  .benefits { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
+  .benefit { background: var(--surface); border-radius: var(--radius); padding: 16px; display: flex; gap: 14px; }
+  .benefit .ico { width: 20px; flex-shrink: 0; color: var(--primary); }
+  .benefit h4 { font-size: 14px; letter-spacing: .14px; margin-bottom: 2px; }
+  .benefit p { font-size: 14px; color: var(--muted); line-height: 1.45; }
+  .contact-quick { display: flex; gap: 24px; padding-top: 16px; flex-wrap: wrap; }
+  .contact-quick a { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--text); }
+  .contact-quick .ico { width: 40px; height: 40px; border-radius: 12px; background: var(--pill); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+
+  .enquiry-card { grid-column: 6 / span 7; background: var(--white); border-radius: var(--radius-lg); padding: 40px; box-shadow: 0 20px 25px -5px rgba(83,94,122,.05), 0 8px 10px -6px rgba(83,94,122,.05); }
+  .form { display: flex; flex-direction: column; gap: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12px; font-weight: 600; letter-spacing: .24px; color: var(--text); }
+  .field label .req { color: #ba1a1a; }
+  .field input {
+    width: 100%; background: var(--surface); border: 1px solid transparent; border-radius: var(--radius);
+    padding: 12px 16px; font-size: 16px; color: var(--text); outline: none; transition: border-color .15s, background .15s;
+  }
+  .field input::placeholder { color: #9ca3af; }
+  .field input:focus { border-color: var(--primary); background: var(--white); box-shadow: 0 0 0 3px rgba(0,81,213,.12); }
+  .field input.invalid { border-color: #ba1a1a; }
+  .field .error { font-size: 12px; color: #ba1a1a; min-height: 0; display: none; }
+  .field.has-error .error { display: block; }
+  .phone-wrap { display: flex; background: var(--surface); border-radius: var(--radius); overflow: hidden; }
+  .phone-wrap .cc { background: var(--surface-2); color: var(--muted); font-size: 12px; font-weight: 600; padding: 14px; display: flex; align-items: center; }
+  .phone-wrap input { border-radius: 0; background: transparent; }
+  .phone-wrap input:focus { background: var(--white); }
+  .submit-btn { width: 100%; padding: 16px 24px; margin-top: 4px; }
+  .form-status { display: none; padding: 12px 16px; border-radius: var(--radius); font-size: 14px; font-weight: 500; }
+  .form-status.success { display: block; background: #dff7e8; color: #0b6b35; }
+  .form-status.error { display: block; background: #fde7e7; color: #a11c1c; }
+  .privacy { display: flex; gap: 8px; justify-content: center; align-items: center; font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: .24px; text-align: center; }
+
+  /* Reviews */
+  .reviews-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+  .reviews-head .left { display: flex; flex-direction: column; gap: 8px; max-width: 672px; }
+  .reviews-head h2 { font-size: 40px; letter-spacing: -1px; padding-top: 4px; }
+  .reviews-head p { font-size: 16px; color: var(--muted); line-height: 1.6; }
+  .rating-pill { background: var(--surface); box-shadow: 0 1px 1px rgba(0,0,0,.05); border-radius: var(--radius); padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+  .stars { display: flex; gap: 4px; color: #f5b301; font-size: 16px; line-height: 1; }
+  .rating-pill .score { font-size: 14px; font-weight: 700; color: var(--text); }
+  .rating-pill .verified { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: .24px; }
+  .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .review { background: var(--white); border-radius: var(--radius-lg); padding: 28px; box-shadow: 0 1px 1px rgba(0,0,0,.05); display: flex; flex-direction: column; justify-content: space-between; gap: 26px; }
+  .review .stars { color: #f5b301; }
+  .review blockquote { font-size: 16px; font-style: italic; line-height: 1.6; color: var(--text); }
+  .review-author { border-top: 1px solid var(--surface-2); padding-top: 17px; display: flex; align-items: center; gap: 12px; }
+  .avatar { width: 40px; height: 40px; border-radius: 12px; background: var(--pill); color: var(--primary-dark); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .author-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .author-role { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: .24px; }
+
+  /* FAQ */
+  .faq-head { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 48px; text-align: center; }
+  .faq-head h2 { font-size: 40px; letter-spacing: -1px; padding-top: 4px; }
+  .faq-head p { font-size: 16px; color: var(--muted); }
+  .faq-wrap { max-width: 896px; margin: 0 auto; padding: 0 48px; }
+  .faq-list { display: flex; flex-direction: column; gap: 14px; }
+  .faq-item { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .faq-q { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px; text-align: left; font-size: 14px; font-weight: 700; color: var(--text); }
+  .faq-q .chev { width: 12px; height: 12px; transition: transform .2s ease; flex-shrink: 0; color: var(--muted); }
+  .faq-item.open .faq-q .chev { transform: rotate(180deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
+  .faq-a-inner { padding: 0 20px 20px; font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .faq-item.open .faq-a { max-height: 300px; }
+
+  /* Audit promo */
+  .audit { background: var(--navy); color: var(--white); padding: 112px 0; }
+  .audit .glow-a { position: absolute; top: -128px; left: -128px; width: 384px; height: 384px; background: rgba(0,81,213,.3); filter: blur(140px); border-radius: 12px; }
+  .audit .glow-b { position: absolute; bottom: -128px; right: -128px; width: 384px; height: 384px; background: rgba(47,217,244,.2); filter: blur(140px); border-radius: 12px; }
+  .audit .container { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 56px; }
+  .audit-head { display: flex; flex-direction: column; align-items: center; gap: 16px; max-width: 768px; text-align: center; }
+  .audit-head .eyebrow { background: rgba(0,81,213,.2); color: var(--cyan); letter-spacing: .6px; box-shadow: var(--shadow); padding: 6px 14px; }
+  .audit-head h2 { color: var(--white); font-size: 40px; letter-spacing: -1px; }
+  .audit-head p { color: var(--navy-text); font-size: 18px; line-height: 28px; }
+  .audit-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 32px; width: 100%; align-items: center; }
+  .audit-visual { grid-column: 1 / span 5; position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); min-height: 480px; }
+  .audit-visual .img {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 60% 35%, rgba(47,217,244,.35), transparent 50%),
+      linear-gradient(180deg, #1d2b4a 0%, #0b1424 100%);
+    display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.3); font-family: var(--font-head);
+  }
+  .audit-visual .grad { position: absolute; inset: 0; background: linear-gradient(to top, #00020a 0%, rgba(0,2,10,0) 55%); opacity: .85; }
+  .audit-visual .overlay { position: absolute; left: 24px; right: 24px; bottom: 24px; background: rgba(16,28,53,.8); backdrop-filter: blur(12px); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+  .audit-visual .overlay .kicker { font-size: 12px; font-weight: 600; color: var(--cyan); letter-spacing: .6px; text-transform: uppercase; }
+  .audit-visual .overlay .title { font-family: var(--font-head); font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: -.3px; line-height: 28px; }
+
+  .audit-card { grid-column: 6 / span 7; background: var(--white); color: var(--text); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+  .audit-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding-bottom: 24px; }
+  .audit-kicker { font-size: 12px; font-weight: 700; color: var(--primary); letter-spacing: .6px; text-transform: uppercase; }
+  .audit-title { font-family: var(--font-head); font-size: 28px; font-weight: 700; color: var(--ink); letter-spacing: -.56px; line-height: 36px; margin-top: 6px; }
+  .price-box { text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
+  .regular { font-size: 14px; color: #75777e; text-decoration: line-through; }
+  .price { display: flex; align-items: baseline; gap: 6px; }
+  .price .big { font-family: var(--font-head); font-size: 56px; font-weight: 700; color: var(--primary); letter-spacing: -1.68px; line-height: 56px; }
+  .price .small { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .24px; }
+  .bullets { display: flex; flex-direction: column; gap: 14px; padding: 16px 0; }
+  .bullet { display: flex; gap: 12px; align-items: flex-start; }
+  .bullet .tick { width: 24px; height: 24px; border-radius: 12px; background: var(--pill); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; color: var(--primary); }
+  .bullet p { font-size: 16px; font-weight: 500; color: var(--text); line-height: 24px; letter-spacing: -.08px; }
+  .audit-cta { display: flex; flex-direction: column; gap: 12px; padding-top: 24px; }
+  .audit-cta .btn { width: 100%; padding: 16px 32px; background: var(--primary); color: var(--white); box-shadow: 0 20px 25px -5px rgba(0,81,213,.3), 0 8px 10px -6px rgba(0,81,213,.3); font-size: 16px; }
+  .audit-cta .btn:hover { background: #0047b8; }
+  .audit-cta small { text-align: center; font-size: 12px; font-weight: 500; color: var(--muted); line-height: 16px; }
+
+  /* Footer */
+  .footer { background: var(--navy); color: var(--navy-text); padding: 64px 0 48px; }
+  .footer-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 40px; padding-bottom: 48px; }
+  .footer-col-1 { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: 16px; }
+  .footer-col-2 { grid-column: 5 / span 2; }
+  .footer-col-3 { grid-column: 7 / span 3; }
+  .footer-col-4 { grid-column: 10 / span 3; }
+  .footer h4 { font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--white); letter-spacing: .14px; margin-bottom: 12px; }
+  .footer-logo { font-family: var(--font-head); font-size: 20px; font-weight: 700; color: var(--white); }
+  .footer-bio { font-size: 14px; line-height: 1.6; max-width: 384px; }
+  .wa-btn { display: inline-flex; align-items: center; gap: 8px; background: #0051d5; color: var(--white); padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; letter-spacing: .24px; align-self: flex-start; margin-top: 8px; }
+  .footer ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer ul a { font-size: 14px; color: var(--navy-text); }
+  .footer ul a:hover { color: var(--white); }
+  .footer-contact { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+  .footer-contact .row { display: flex; gap: 8px; align-items: flex-start; }
+  .footer-contact .row svg { flex-shrink: 0; margin-top: 3px; }
+  .socials { display: flex; gap: 10px; padding-top: 8px; }
+  .socials a { width: 32px; height: 32px; border-radius: 4px; background: rgba(224,227,229,.2); display: flex; align-items: center; justify-content: center; color: var(--navy-text); }
+  .socials a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid #1f2d4a; padding-top: 33px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12px; font-weight: 500; letter-spacing: .24px; }
+  .footer-bottom nav { display: flex; gap: 24px; }
+  .footer-bottom a:hover { color: var(--white); }
+
+  /* Floating mobile nav */
+  .mobile-nav { display: none; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .nav { gap: 16px; }
+    .brand-tag { display: none; }
+    .header-phone { display: none; }
+  }
+  @media (max-width: 960px) {
+    .container { padding: 0 24px; }
+    .nav, .header-cta { display: none; }
+    .menu-toggle { display: block; }
+    .mobile-nav.open {
+      display: flex; flex-direction: column; gap: 4px; position: absolute; top: 80px; left: 0; right: 0;
+      background: var(--white); box-shadow: 0 10px 20px rgba(0,0,0,.08); padding: 16px 24px;
+    }
+    .mobile-nav a { padding: 12px 0; font-size: 15px; font-weight: 600; color: var(--text); border-bottom: 1px solid var(--surface); }
+    .hero { padding: 140px 0 72px; }
+    .hero .container { grid-template-columns: 1fr; }
+    .hero-left, .hero-right { grid-column: 1 / -1; }
+    .hero h1 { font-size: 44px; line-height: 52px; }
+    .hero-right { height: 420px; }
+    .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    .enquiry .container { grid-template-columns: 1fr; }
+    .enquiry-left, .enquiry-card { grid-column: 1 / -1; }
+    .review-grid { grid-template-columns: 1fr; }
+    .audit-grid { grid-template-columns: 1fr; }
+    .audit-visual, .audit-card { grid-column: 1 / -1; }
+    .audit-visual { min-height: 360px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-col-1 { grid-column: 1 / -1; }
+    .footer-col-2, .footer-col-3, .footer-col-4 { grid-column: auto; }
+  }
+  @media (max-width: 600px) {
+    .section { padding: 64px 0; }
+    h2.section-title, .metrics-head h2, .enquiry-left h2, .reviews-head h2, .faq-head h2, .audit-head h2 { font-size: 30px; line-height: 38px; letter-spacing: -.5px; }
+    .hero h1 { font-size: 36px; line-height: 44px; letter-spacing: -1px; }
+    .hero-sub { font-size: 16px; line-height: 26px; }
+    .metric-grid { grid-template-columns: 1fr; }
+    .metric-value { font-size: 32px; }
+    .enquiry-card, .audit-card { padding: 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .price .big { font-size: 44px; }
+    .audit-title { font-size: 22px; line-height: 30px; }
+    .telemetry-1 { width: 180px; right: 12px; top: 12px; }
+    .telemetry-2 { left: 12px; bottom: 56px; }
+    .telemetry-3 { right: 12px; bottom: 12px; }
+    .faq-wrap { padding: 0 20px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { justify-content: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="top">
+  <div class="container">
+    <div class="brand">
+      <a href="#top" class="logo">G Mac Systems</a>
+      <span class="brand-tag">Mac Systems · Tirupur</span>
+    </div>
+    <nav class="nav" aria-label="Primary">
+      <a href="#top" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#audit" class="offer-tag">₹1 IT <span>Offer</span></a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-right">
+      <a class="header-phone" href="tel:+919791414954">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +91 97914 14954
+      </a>
+      <a href="#enquiry" class="header-cta">Get a Free Consultation</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+    <a href="#top">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#audit">₹1 IT Audit Offer</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#faq">FAQ</a>
+    <a href="#enquiry">Get a Free Consultation</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ SECTION 1: HERO ============ -->
+<section class="hero" id="about">
+  <div class="container">
+    <div class="hero-left">
+      <h1>Technology That<br>Works.<br><span class="accent">Business That Grows.</span></h1>
+      <p class="hero-sub">From computer hardware and high-throughput networking to enterprise printers and 24/7 dedicated IT support, we empower your business to stay connected, agile, and ahead of disruption.</p>
+      <div class="cta-row">
+        <a href="#enquiry" class="btn btn-primary">
+          Get Started Today
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h13M9 1l5 5-5 5"/></svg>
+        </a>
+        <a href="#services" class="btn btn-secondary">
+          Explore Our Services
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 5h11M8 1l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="trust-checks">
+        <div class="trust-check"><span class="dot"></span>Reliable IT Support</div>
+        <div class="trust-check"><span class="dot"></span>Business-Focused</div>
+        <div class="trust-check"><span class="dot"></span>End-to-End Solutions</div>
+      </div>
+      <div class="hotline">
+        <span><strong>Immediate Hotline:</strong></span>
+        <span class="muted">+91 97914 14954</span>
+        <span class="sep">•</span>
+        <a class="wa" href="https://wa.me/919791414954" target="_blank" rel="noopener">Instant WhatsApp Support</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="visual-stage">
+        <div class="visual-image">Server &amp; network infrastructure</div>
+        <div class="telemetry telemetry-1">
+          <div class="row">
+            <div class="label"><span style="width:8px;height:8px;border-radius:50%;background:#316bf3;display:inline-block;"></span>Network Connected</div>
+          </div>
+          <div class="row"><span class="value">99.98%</span></div>
+          <svg class="spark" viewBox="0 0 128 24" preserveAspectRatio="none"><polyline points="0,18 12,14 24,16 36,9 48,12 60,6 72,10 84,4 96,8 108,3 120,6 128,2" fill="none" stroke="#0051d5" stroke-width="2"/></svg>
+        </div>
+        <div class="telemetry telemetry-2">
+          <div class="ico">
+            <svg width="14" height="17" viewBox="0 0 24 24" fill="#00174b"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>
+          </div>
+          <div>
+            <div class="title">System Optimized</div>
+            <div class="sub">Ping: 8ms • Latency Zero</div>
+          </div>
+        </div>
+        <div class="telemetry telemetry-3">
+          <svg width="12" height="15" viewBox="0 0 24 24" fill="none" stroke="#a2eeff" stroke-width="2.5"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg>
+          IT Support Active
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 2: ACHIEVEMENT / TRUST METRICS ============ -->
+<section class="section section-alt" id="services">
+  <div class="container">
+    <div class="metrics-head">
+      <h2 class="section-title">Technology You Can Count On.</h2>
+      <p>Practical IT solutions, dependable support, and enterprise infrastructure that keeps your operations moving without interruption.</p>
+    </div>
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="metric-icon"><svg width="26" height="13" viewBox="0 0 26 13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h24M5 1v11M21 1v11"/></svg></div>
+        <div>
+          <div class="metric-value">[500]+</div>
+          <div class="metric-label">Happy Clients</div>
+          <div class="metric-desc">SMEs, corporations, and manufacturing plants trust our daily IT management.</div>
+        </div>
+      </div>
+      <div class="metric">
+        <div class="metric-icon"><svg width="20" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg></div>
+        <div>
+          <div class="metric-value">[1,200]+</div>
+          <div class="metric-label">Projects Completed</div>
+          <div class="metric-desc">Complex network cabling, rack deployments, and structured migrations.</div>
+        </div>
+      </div>
+      <div class="metric">
+        <div class="metric-icon"><svg width="22" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8"/></svg></div>
+        <div>
+          <div class="metric-value">[4,500]+</div>
+          <div class="metric-label">Systems Installed</div>
+          <div class="metric-desc">High-spec CAD rigs, business laptops, and multi-tray network printers.</div>
+        </div>
+      </div>
+      <div class="metric">
+        <div class="metric-icon"><svg width="18" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div>
+          <div class="metric-value">[99.4]%</div>
+          <div class="metric-label">Client Satisfaction</div>
+          <div class="metric-desc">SLA-backed response speed, genuine hardware parts, and transparent billing.</div>
+        </div>
+      </div>
+    </div>
+    <p class="metrics-note">* Metrics shown with editable placeholders for verified business records &amp; periodic audits.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: LEAD FORM ============ -->
+<section class="section enquiry" id="enquiry">
+  <div class="container">
+    <div class="enquiry-left">
+      <span class="eyebrow" style="align-self:flex-start;">GET IN TOUCH</span>
+      <h2>Let's Find the Right IT Solution for Your Business.</h2>
+      <p>Whether you need a new computer setup, reliable networking, enterprise printer support, or complete turnkey IT management, tell us what you're looking for. We'll help you chart the next step with speed and precision.</p>
+      <div class="benefits">
+        <div class="benefit">
+          <svg class="ico" width="16" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+          <div>
+            <h4>Solutions tailored to your requirements</h4>
+            <p>Custom hardware configurations built specifically for your team size and operational load.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <div>
+            <h4>Practical recommendations without unnecessary expenses</h4>
+            <p>We optimize existing gear whenever possible, never pushing predatory licensing or redundant hardware.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <svg class="ico" width="18" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <div>
+            <h4>Reliable support from enquiry to implementation</h4>
+            <p>A single assigned engineer manages your deployment from unboxing to live deployment and beyond.</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-quick">
+        <a href="tel:+919791414954">
+          <span class="ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          +91 97914 14954
+        </a>
+        <a href="mailto:info@macsystems.org">
+          <span class="ico"><svg width="16" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></span>
+          info@macsystems.org
+        </a>
+      </div>
+    </div>
+
+    <div class="enquiry-card">
+      <form class="form" id="leadForm" novalidate>
+        <div class="form-row">
+          <div class="field" id="fieldName">
+            <label for="name">Full Name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" placeholder="John Doe" autocomplete="name" required />
+            <span class="error">Please enter your full name.</span>
+          </div>
+          <div class="field" id="fieldEmail">
+            <label for="email">Email Address <span class="req">*</span></label>
+            <input id="email" name="email" type="email" placeholder="john@company.com" autocomplete="email" required />
+            <span class="error">Please enter a valid email address.</span>
+          </div>
+        </div>
+        <div class="field" id="fieldPhone">
+          <label for="phone">Phone Number <span class="req">*</span></label>
+          <div class="phone-wrap">
+            <span class="cc">+91</span>
+            <input id="phone" name="phone" type="tel" placeholder="98765 43210" autocomplete="tel" required />
+          </div>
+          <span class="error">Please enter a valid 10-digit phone number.</span>
+        </div>
+        <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
+          Submit My Enquiry
+          <svg width="16" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+        </button>
+        <div class="form-status" id="formStatus" role="status"></div>
+        <div class="privacy">
+          <svg width="11" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          Your information stays private. We'll only use it to respond to your enquiry.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 5: REVIEWS ============ -->
+<section class="section section-alt" id="reviews">
+  <div class="container">
+    <div class="reviews-head">
+      <div class="left">
+        <span class="eyebrow" style="align-self:flex-start;">CLIENT REPUTATION</span>
+        <h2>Trusted by Businesses. Backed by Experience.</h2>
+        <p>We believe genuine IT support is about more than quick fixes—it's about making everyday business operations fluid and headache-free.</p>
+      </div>
+      <div class="rating-pill">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <div>
+          <div class="score">4.9 / 5.0 Rating</div>
+          <div class="verified">Verified Client Feedback</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-grid">
+      <div class="review">
+        <div>
+          <div class="stars">★★★★★</div>
+          <blockquote style="margin-top:16px;">"Smooth migration and lightning-fast office network setup. Downtime was virtually zero while switching 45 workstations to high-throughput cabling."</blockquote>
+        </div>
+        <div class="review-author">
+          <div class="avatar">CN</div>
+          <div>
+            <div class="author-name">[Client Name Placeholder]</div>
+            <div class="author-role">[Managing Director, Logistics Firm]</div>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div>
+          <div class="stars">★★★★★</div>
+          <blockquote style="margin-top:16px;">"Their hardware diagnostics and regular AMC maintenance saved us significant replacement costs. Whenever an issue surfaces, their team responds in under 30 minutes."</blockquote>
+        </div>
+        <div class="review-author">
+          <div class="avatar">CP</div>
+          <div>
+            <div class="author-name">[Client Name Placeholder]</div>
+            <div class="author-role">[Operations Head, Financial Consultancy]</div>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div>
+          <div class="stars">★★★★★</div>
+          <blockquote style="margin-top:16px;">"From heavy-duty network printers to our multi-room Wi-Fi mesh, G Mac Systems made our whole setup seamless. Transparent costs with zero gimmicks."</blockquote>
+        </div>
+        <div class="review-author">
+          <div class="avatar">CA</div>
+          <div>
+            <div class="author-name">[Client Name Placeholder]</div>
+            <div class="author-role">[Founder, Creative Agency]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 6: FAQ ============ -->
+<section class="section" id="faq" style="background: var(--surface);">
+  <div class="container">
+    <div class="faq-head">
+      <span class="eyebrow">COMMON INQUIRIES</span>
+      <h2>Got Questions? We've Got Answers.</h2>
+      <p>Everything you need to know before getting started with G Mac Systems.</p>
+    </div>
+  </div>
+  <div class="faq-wrap">
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What IT services do you provide?</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">We provide computer hardware and setup, networking and structured cabling, printer sales and maintenance, complete office IT infrastructure, and annual maintenance contracts (AMC).</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do you provide IT support for small businesses?</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. We work with SMEs, corporations, and manufacturing plants, and we tailor our support plans to your team size and operational load.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do you offer on-site support?</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. A single assigned engineer manages your deployment on-site, from unboxing through to live operation and ongoing support.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What is included in the ₹1 IT Audit Session?</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">An on-site assessment of computer hardware health, network performance and Wi-Fi dead zones, printer and peripheral latency, and data backup and security gaps. You receive an actionable 5-page executive roadmap covering quick fixes and long-term upgrades.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Can you help set up a complete office IT infrastructure?</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. We plan and deploy complete office setups, including hardware, structured networking, printers, and Wi-Fi coverage.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do you provide ongoing maintenance and support?</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Our annual maintenance contracts (AMC) and SLA-backed support cover ongoing maintenance, diagnostics, and fast response times.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>How can I request a quote?</span>
+          <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Fill in the enquiry form above with your name, email, and phone number, or call or WhatsApp us directly and we'll get back to you.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4: ₹1 IT AUDIT (PROMO) ============ -->
+<section class="audit section-dark" id="audit" style="position:relative;">
+  <div class="glow-a"></div>
+  <div class="glow-b"></div>
+  <div class="container">
+    <div class="audit-head">
+      <span class="eyebrow">LIMITED-TIME INTRODUCTORY OFFER</span>
+      <h2>Not Sure What's Holding Your Business Back?</h2>
+      <p>Get an exhaustive, on-site professional IT assessment and uncover hidden security risks, network bottlenecks, and equipment vulnerabilities before they cost your firm revenue.</p>
+    </div>
+
+    <div class="audit-grid">
+      <div class="audit-visual">
+        <div class="img">Engineer with server rack</div>
+        <div class="grad"></div>
+        <div class="overlay">
+          <div class="kicker">COMPREHENSIVE SCOPE</div>
+          <div class="title">Full-Spectrum Hardware &amp; Security Diagnosis</div>
+        </div>
+      </div>
+
+      <div class="audit-card">
+        <div>
+          <div class="audit-top">
+            <div>
+              <div class="audit-kicker">DIAGNOSTIC ASSESSMENT</div>
+              <div class="audit-title">Complete IT Audit Session</div>
+            </div>
+            <div class="price-box">
+              <div class="regular">Regular Price: ₹4,999</div>
+              <div class="price"><span class="big">₹1</span><span class="small">only</span></div>
+            </div>
+          </div>
+
+          <div class="bullets">
+            <div class="bullet">
+              <span class="tick"><svg width="11" height="8" viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4l3 3 7-6"/></svg></span>
+              <p>Computer hardware health, drive longevity, and RAM/CPU utilization check.</p>
+            </div>
+            <div class="bullet">
+              <span class="tick"><svg width="11" height="8" viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4l3 3 7-6"/></svg></span>
+              <p>Network performance, router firmware vulnerabilities, and Wi-Fi dead-zone mapping.</p>
+            </div>
+            <div class="bullet">
+              <span class="tick"><svg width="11" height="8" viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4l3 3 7-6"/></svg></span>
+              <p>Printer and shared peripheral latency, queue efficiency, and toner expense analysis.</p>
+            </div>
+            <div class="bullet">
+              <span class="tick"><svg width="11" height="8" viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4l3 3 7-6"/></svg></span>
+              <p>Identification of silent IT bottlenecks, data backup lapses, and virus exposures.</p>
+            </div>
+            <div class="bullet">
+              <span class="tick"><svg width="11" height="8" viewBox="0 0 12 9" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4l3 3 7-6"/></svg></span>
+              <p>Actionable 5-page executive roadmap highlighting fast fixes vs. long-term upgrades.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="audit-cta">
+          <a class="btn" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener">
+            <svg width="15" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            Book My ₹1 Audit Session
+          </a>
+          <small>Offer subject to engineer schedule availability and geographic proximity. Strictly limited to 10 slots per week.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ SECTION 7: FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col-1">
+        <div class="footer-logo">G Mac Systems</div>
+        <p class="footer-bio">Your reliable technology partner for enterprise computer hardware, structured networking, printer solutions, and proactive business IT support.</p>
+        <a class="wa-btn" href="https://wa.me/919791414954" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20z"/></svg>
+          WhatsApp Direct Helpline
+        </a>
+      </div>
+      <div class="footer-col-2">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#audit">₹1 IT Audit Session</a></li>
+          <li><a href="#reviews">Reviews &amp; Trust</a></li>
+          <li><a href="#enquiry">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col-3">
+        <h4>Our Services</h4>
+        <ul>
+          <li><a href="#services">Computer Hardware &amp; Setup</a></li>
+          <li><a href="#services">Networking &amp; Structured Cabling</a></li>
+          <li><a href="#services">Printer Sales &amp; Maintenance</a></li>
+          <li><a href="#services">Complete Office IT Infrastructure</a></li>
+          <li><a href="#services">Annual Maintenance Contract (AMC)</a></li>
+        </ul>
+      </div>
+      <div class="footer-col-4">
+        <h4>Contact Us</h4>
+        <div class="footer-contact">
+          <div class="row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>+91 97914 14954</span>
+          </div>
+          <div class="row">
+            <svg width="14" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            <span>info@macsystems.org</span>
+          </div>
+          <div class="row">
+            <svg width="12" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>No.38/73, Sri Balaji Complex, Near Apr Furniture, Stanes 4th Street, Pushpa Theatre, Tirupur - 641602, Tamil Nadu</span>
+          </div>
+          <div class="row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Mon - Sat: 9:00 AM - 7:00 PM</span>
+          </div>
+        </div>
+        <div class="socials">
+          <a href="#" aria-label="Facebook"><svg width="13" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6c0-1 .5-1.5 1.5-1.5H17V1h-3c-3 0-4 2-4 4.5V8H7v3.5h3V23h4V11.5h3l.5-3.5z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM2.5 9h3v12h-3zM9 9h3v1.7c.4-.8 1.4-1.9 3.2-1.9 3.4 0 4 2.2 4 5.1V21h-3v-6.2c0-1.5 0-3.4-2-3.4s-2.4 1.6-2.4 3.3V21H9z"/></svg></a>
+          <a href="#" aria-label="X"><svg width="14" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h3l-7 8 8 12h-6l-5-7-6 7H2l8-9L2 2h6l4.5 6z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 G Mac Systems. All Rights Reserved.</div>
+      <nav>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">SLA Terms</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Config ----
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxlZSGCwHgpz7BTWXsHteICPE83m_bxvnYwAYDtOiKxljCcXP5lMUdbXqQkvu5sPhXC/exec";
+
+  // ---- Mobile menu ----
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  menuToggle.addEventListener("click", () => {
+    const open = mobileNav.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(open));
+  });
+  mobileNav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+    mobileNav.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }));
+
+  // ---- FAQ accordion ----
+  document.querySelectorAll(".faq-item").forEach(item => {
+    const btn = item.querySelector(".faq-q");
+    btn.addEventListener("click", () => {
+      const isOpen = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", String(isOpen));
+    });
+  });
+
+  // ---- Lead form ----
+  const form = document.getElementById("leadForm");
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const phoneInput = document.getElementById("phone");
+  const submitBtn = document.getElementById("submitBtn");
+  const statusBox = document.getElementById("formStatus");
+
+  function setFieldError(fieldId, hasError) {
+    const field = document.getElementById(fieldId);
+    field.classList.toggle("has-error", hasError);
+    field.querySelector("input").classList.toggle("invalid", hasError);
+  }
+
+  function validate() {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.replace(/\s+/g, "");
+    const nameOk = name.length >= 2;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const phoneOk = /^[6-9]\d{9}$/.test(phone);
+    setFieldError("fieldName", !nameOk);
+    setFieldError("fieldEmail", !emailOk);
+    setFieldError("fieldPhone", !phoneOk);
+    return nameOk && emailOk && phoneOk;
+  }
+
+  function showSuccess() {
+    statusBox.className = "form-status success";
+    statusBox.textContent = "Thank you! Your enquiry has been received. Our team will contact you shortly.";
+    form.reset();
+    submitBtn.disabled = false;
+  }
+
+  function showError() {
+    statusBox.className = "form-status error";
+    statusBox.textContent = "Something went wrong while sending your enquiry. Please try again, or call +91 97914 14954.";
+    submitBtn.disabled = false;
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    statusBox.className = "form-status";
+    statusBox.textContent = "";
+
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+
+    const params = new URLSearchParams({
+      name: nameInput.value.trim(),
+      email: emailInput.value.trim(),
+      phone: phoneInput.value.replace(/\s+/g, "")
+    });
+    const url = SCRIPT_URL + "?" + params.toString();
+
+    fetch(url, { method: "GET", mode: "no-cors" })
+      .then(() => showSuccess())
+      .catch(() => showError());
+  });
+</script>
+</body>
+</html>
